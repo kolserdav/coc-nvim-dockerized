@@ -1,6 +1,6 @@
 #! /usr/bin/bash
 
-echo "Installing Neovim plugins..."
+echo "Installing Neovim plugins."
 nvim -c "PlugInstall --sync | q | q"
 echo "Installing Coc plugins..."
 nvim -c "CocInstall coc-tsserver --sync | q | q"

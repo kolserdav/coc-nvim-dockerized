@@ -1,1 +1,1 @@
-const d: string = '2';
+const d: string = 2;
