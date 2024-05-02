@@ -1,15 +1,16 @@
 services:
   neovim:
     build:
-      context: ./
+      context: ./src/platforms/node
       dockerfile: Dockerfile
     container_name: neovim
     environment:
-      UID: ${NVIM_USER_UID}
-      GID: ${NVIM_USER_GID}
+      UID: ${NEOVIM_USER_UID}
+      GID: ${NEOVIM_USER_GID}
+      MNT_DIR: ${NEOVIM_MNT_DIR}
     volumes:
       - .vimrc:/home/node/.vimrc
-      - ${NVIM_MNT_DIR}:/mnt
+      - ${NEOVIM_MNT_DIR}:/mnt
       - neovim-coc:/home/node/.local/share/coc
     hostname: neovim
 volumes:
