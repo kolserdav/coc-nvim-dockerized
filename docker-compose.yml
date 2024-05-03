@@ -10,7 +10,7 @@ services:
       MNT_DIR: ${NEOVIM_MNT_DIR}
     volumes:
       - .vimrc:/home/node/.vimrc
-      - ${NEOVIM_MNT_DIR}:/mnt
+      - ${NEOVIM_MNT_DIR}:/mnt/project
       - neovim-coc:/home/node/.local/share/coc
     hostname: neovim
 volumes:
