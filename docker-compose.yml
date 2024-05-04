@@ -1,7 +1,7 @@
 services:
   neovim:
     build:
-      context: ./src/platforms/node
+      context: ./src/platforms/node/generated
       dockerfile: Dockerfile
     container_name: neovim
     environment:

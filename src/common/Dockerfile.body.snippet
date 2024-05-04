@@ -1,0 +1,6 @@
+FROM node:bookworm-slim
+
+WORKDIR $MNT_DIR
+
+ENTRYPOINT ["sh", "/opt/entrypoint.sh"]
+CMD ["sh", "/opt/init.sh"]
