@@ -25,6 +25,11 @@ RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/p
 
 ########## Platform specified part ##########
 
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH=/home/$NVIM_USER/.cargo/bin:$PATH
+
+RUN rustup component add rust-analyzer
 #############################################
 
 

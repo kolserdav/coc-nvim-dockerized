@@ -1,3 +1,5 @@
+start:
+	make delete && make merge && make compose
 logs:
 	docker logs neovim
 exec:

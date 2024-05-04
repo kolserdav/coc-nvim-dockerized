@@ -1,6 +1,12 @@
 FROM node:bookworm-slim
 
+COPY init.sh $HOME/init.sh
+COPY entrypoint.sh $HOME/entrypoint.sh
+COPY init.vim $XDG_CONFIG_HOME/nvim/init.vim
+
+RUN nvim -c "PlugInstall --sync | qa"
+
 WORKDIR $MNT_DIR
 
-ENTRYPOINT ["sh", "/opt/entrypoint.sh"]
-CMD ["sh", "/opt/init.sh"]
+ENTRYPOINT ["sh", "/home/node/entrypoint.sh"]
+CMD ["sh", "/home/node/init.sh"]

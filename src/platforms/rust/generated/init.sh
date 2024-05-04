@@ -12,12 +12,15 @@ npm install coc-json --install-strategy=shallow --omit=dev
 
 ########## Platform specified part ##########
 echo "Installing Coc plugins..."
-npm install coc-tsserver --no-package-lock --omit=dev
+npm install coc-rust-analyzer --no-package-lock --omit=dev
 
 echo "Installing dependencies ..."
 # Return to working dir
 cd -
-npm i
+
+cargo update
+
+rust-analyzer
 #############################################
 
 

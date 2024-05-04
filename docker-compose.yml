@@ -1,7 +1,7 @@
 services:
   neovim:
     build:
-      context: ./src/platforms/node/generated
+      context: ./src/platforms/rust/generated
       dockerfile: Dockerfile
     container_name: neovim
     environment:
@@ -9,7 +9,6 @@ services:
       GID: ${NEOVIM_USER_GID}
       MNT_DIR: ${NEOVIM_MNT_DIR}
     volumes:
-      - .vimrc:/home/node/.vimrc
       - ${NEOVIM_MNT_DIR}:/mnt/project
       - neovim-coc:/home/node/.local/share/coc
     hostname: neovim
