@@ -23,18 +23,23 @@ USER $NVIM_USER
 RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
+ENV NPM_CONFIG_PREFIX=$HOME/.npm-global
+
 ########## Platform specified part ##########
 
 #############################################
 
 
 
+COPY init.vim $XDG_CONFIG_HOME/nvim/init.vim
+RUN nvim -c "PlugInstall --sync | qa"
+
 COPY init.sh $HOME/init.sh
 COPY entrypoint.sh $HOME/entrypoint.sh
-COPY init.vim $XDG_CONFIG_HOME/nvim/init.vim
 RUN sudo chown $NVIM_USER:$NVIM_USER $HOME/*
 
-RUN nvim -c "PlugInstall --sync | qa"
+
+ENV PATH=$PATH:$NPM_CONFIG_PREFIX/bin
 
 WORKDIR $MNT_DIR
 

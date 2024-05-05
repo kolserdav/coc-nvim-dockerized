@@ -1,5 +1,5 @@
 #! /usr/bin/bash
 
-NODES="node,rust"
+NODES="node,rust,python"
 
 echo $NODES
