@@ -13,7 +13,15 @@ cd -
 
 echo "Installing dependencies ..."
 
-cargo update
+custom_script_path=/home/$NVIM_USER/custom.sh
+
+if [ -f $custom_script_path  ]; then
+	bash $custom_script_path
+else
+	echo "Custom script is not defined, running default 'cargo update'"
+	cargo update
+fi
+
 
 rust-analyzer
 #############################################
