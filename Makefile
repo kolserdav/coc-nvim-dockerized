@@ -11,6 +11,6 @@ merge:
 compose:
 	docker compose up -d
 delete: 
-	docker rm -f neovim && docker image rm neovim-dockerized-neovim && docker volume rm neovim-dockerized_neovim-coc
+	docker rm -f neovim && docker image rm neovim-dockerized-neovim && docker volume rm neovim-dockerized_neovim
 create-engine:
 	docker buildx create --use
