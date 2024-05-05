@@ -36,6 +36,8 @@ RUN nvim -c "PlugInstall --sync | qa"
 
 COPY init.sh $HOME/init.sh
 COPY entrypoint.sh $HOME/entrypoint.sh
+RUN sudo chown $NVIM_USER:$NVIM_USER $HOME/*
+
 
 ENV PATH=$PATH:$NPM_CONFIG_PREFIX/bin
 
