@@ -32,6 +32,7 @@ RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/p
 COPY init.sh $HOME/init.sh
 COPY entrypoint.sh $HOME/entrypoint.sh
 COPY init.vim $XDG_CONFIG_HOME/nvim/init.vim
+RUN sudo chown $NVIM_USER:$NVIM_USER $HOME/*
 
 RUN nvim -c "PlugInstall --sync | qa"
 
