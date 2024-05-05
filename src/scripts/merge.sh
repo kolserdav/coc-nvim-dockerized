@@ -37,13 +37,13 @@ do
 
     echo $START_SH > $init_path
     echo $GENERATED_MESS >> $init_path
-    echo "$(cat $common_path/init.snippet.head.sh)" >> $init_path
+    echo "$(cat $common_path/init.head.snippet.sh)" >> $init_path
     echo '' >> $init_path
     echo "########## Platform specified part ##########" >> $init_path
     echo "$(cat $platform_path/init.sh)" >> $init_path
     echo "#############################################" >> $init_path
     echo '' >> $init_path
-    echo "$(cat $common_path/init.snippet.body.sh)" >> $init_path
+    echo "$(cat $common_path/init.body.snippet.sh)" >> $init_path
 
     echo $START_SH > $entrypoint_path
     echo $GENERATED_MESS >> $entrypoint_path

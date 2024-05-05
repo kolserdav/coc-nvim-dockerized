@@ -1,11 +1,8 @@
 echo "Installing Coc plugins..."
+cd $EXTENSIONS
 npm install coc-pyright --ignore-scripts --no-lockfile --no-global --legacy-peer-deps --omit=dev
-npm install -g pyright
-
-echo "Installing dependencies ..."
-# Return to working dir
 cd -
 
-#pip install
+echo "Installing dependencies ..."
 
-pyright -w
+#pip install

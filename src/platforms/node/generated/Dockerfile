@@ -36,12 +36,21 @@ RUN nvim -c "PlugInstall --sync | qa"
 
 COPY init.sh $HOME/init.sh
 COPY entrypoint.sh $HOME/entrypoint.sh
-RUN sudo chown $NVIM_USER:$NVIM_USER $HOME/*
 
+RUN sudo chown $NVIM_USER:$NVIM_USER $HOME/*
 
 ENV PATH=$PATH:$NPM_CONFIG_PREFIX/bin
 
 WORKDIR $MNT_DIR
+
+ENV XDG_CONFIG_HOME=$HOME/.local/share
+ENV COC_PATH=$XDG_CONFIG_HOME/coc
+ENV EXTENSIONS=$COC_PATH/extensions
+RUN mkdir -p $COC_PATH
+RUN sudo chown node:node -R $COC_PATH
+RUN mkdir -p $EXTENSIONS
+RUN echo '{"dependencies":{}}' > $EXTENSIONS/package.json
+ENV PATH=$PATH:$EXTENSIONS/node_modules/.bin
 
 ENTRYPOINT ["sh", "/home/node/entrypoint.sh"]
 CMD ["sh", "/home/node/init.sh"]
