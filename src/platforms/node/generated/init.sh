@@ -12,7 +12,7 @@ npm install coc-json --install-strategy=shallow --omit=dev
 
 ########## Platform specified part ##########
 echo "Installing Coc plugins..."
-npm install coc-tsserver --no-package-lock --omit=dev
+npm install coc-tsserver --ignore-scripts --no-lockfile --no-global --legacy-peer-deps --omit=dev
 
 echo "Installing dependencies ..."
 # Return to working dir

@@ -28,10 +28,8 @@ ENV NPM_CONFIG_PREFIX=$HOME/.npm-global
 ########## Platform specified part ##########
 
 
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-ENV PATH=/home/$NVIM_USER/.cargo/bin:$PATH
-
-RUN rustup component add rust-analyzer
+RUN sudo apt-get install python3 python3-pip -y
+RUN sudo ln -s $(which python3) /usr/bin/python
 #############################################
 
 

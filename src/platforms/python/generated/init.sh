@@ -12,15 +12,16 @@ npm install coc-json --install-strategy=shallow --omit=dev
 
 ########## Platform specified part ##########
 echo "Installing Coc plugins..."
-npm install coc-rust-analyzer --ignore-scripts --no-lockfile --no-global --legacy-peer-deps --omit=dev
+npm install coc-pyright --ignore-scripts --no-lockfile --no-global --legacy-peer-deps --omit=dev
+npm install -g pyright
 
 echo "Installing dependencies ..."
 # Return to working dir
 cd -
 
-cargo update
+#pip install
 
-rust-analyzer
+pyright -w
 #############################################
 
 
