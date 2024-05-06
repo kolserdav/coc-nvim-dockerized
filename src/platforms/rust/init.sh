@@ -5,9 +5,8 @@ cd -
 
 echo "Installing dependencies ..."
 
-custom_script_path=/home/$NVIM_USER/custom.sh
-
 if [ -f $custom_script_path  ]; then
+	echo "Running custom user script"
 	bash $custom_script_path
 else
 	echo "Custom script is not defined, running default 'cargo update'"

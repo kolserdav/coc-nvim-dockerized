@@ -5,6 +5,8 @@ cd $EXTENSIONS
 npm install coc-json --install-strategy=shallow --omit=dev
 cd -
 
+custom_script_path=/home/$NVIM_USER/custom.sh
+
 ########## Platform specified part ##########
 echo "Installing Coc plugins..."
 cd $EXTENSIONS
@@ -13,7 +15,13 @@ cd -
 
 echo "Installing dependencies ..."
 
-#pip install
+if [ -f $custom_script_path  ]; then
+	echo "Running custom user script"
+	bash $custom_script_path
+else
+	echo "Custom script is not defined, running default 'pip install'"
+	pip install
+fi
 #############################################
 
 
