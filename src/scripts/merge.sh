@@ -20,6 +20,7 @@ do
     init_path=$generated_path/init.sh
     init_vim_path=$generated_path/init.vim
     entrypoint_path=$generated_path/entrypoint.sh
+    coc_setting_path=$generated_path/coc-settings.json
 
     mkdir -p $generated_path
 
@@ -51,4 +52,6 @@ do
 
     echo "\" $GENERATED_MESS" > $init_vim_path
     echo "$(cat $common_path/init.vim)" >> $init_vim_path
+    
+    echo "$(cat $platform_path/coc-settings.json)" > $coc_setting_path
 done
