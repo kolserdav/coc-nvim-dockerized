@@ -2,6 +2,9 @@ echo "Installing Coc plugins..."
 cd $EXTENSIONS
 npm install coc-pyright --ignore-scripts --no-lockfile --no-global --legacy-peer-deps --omit=dev
 cd -
+cd $EXTENSIONS/node_modules/coc-pyright
+npm i --ignore-scripts --no-lockfile --no-global --legacy-peer-deps --omit=dev
+cd -
 
 echo "Installing dependencies ..."
 
