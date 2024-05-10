@@ -6,17 +6,11 @@ npm install coc-json --install-strategy=shallow --omit=dev
 cd -
 
 custom_script_path=/home/$NVIM_USER/custom.sh
-
 ########## Platform specified part ##########
-echo "Installing Coc plugins..."
-cd $EXTENSIONS
-npm install coc-pyright --ignore-scripts --no-lockfile --no-global --legacy-peer-deps --omit=dev
-cd -
-cd $EXTENSIONS/node_modules/coc-pyright
-npm i --ignore-scripts --no-lockfile --no-global --legacy-peer-deps --omit=dev
-cd -
-
-echo "Installing dependencies ..."
+# It will be here while this is not changed https://github.com/fannheyward/coc-pyright/blob/e5a1dca4bf4877b7824c4575a8cf21ae831b6842/src/index.ts#L70
+mkdir -p $EXTENSIONS/node_modules/coc-pyright/node_modules
+ln -s $EXTENSIONS/node_modules/pyright $EXTENSIONS/node_modules/coc-pyright/node_modules/pyright
+#####################################################################################################################################################
 
 if [ -f $custom_script_path  ]; then
 	echo "Running custom user script"
@@ -26,7 +20,6 @@ else
 	pip install
 fi
 #############################################
-
 
 echo "Starting default script ..."
 while :

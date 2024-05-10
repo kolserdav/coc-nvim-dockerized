@@ -1,8 +1,5 @@
 FROM node:bookworm-slim
 
-COPY init.vim $XDG_CONFIG_HOME/nvim/init.vim
-RUN nvim -c "PlugInstall --sync | qa"
-
 COPY init.sh $HOME/init.sh
 COPY entrypoint.sh $HOME/entrypoint.sh
 
@@ -11,20 +8,6 @@ RUN sudo chown $NVIM_USER:$NVIM_USER $HOME/*
 ENV PATH=$PATH:$NPM_CONFIG_PREFIX/bin
 
 WORKDIR $MNT_DIR
-
-ENV XDG_CONFIG_HOME=$HOME/.local/share
-ENV COC_PATH=$XDG_CONFIG_HOME/coc
-ENV NVIM_CONF_PATH=$XDG_CONFIG_HOME/nvim
-ENV COC_SETTINGS_PATH=$NVIM_CONF_PATH/coc-settings.json
-COPY coc-settings.json $COC_SETTINGS_PATH
-RUN sudo chown $NVIM_USER:$NVIM_USER $COC_SETTINGS_PATH
-
-ENV EXTENSIONS=$COC_PATH/extensions
-RUN mkdir -p $COC_PATH
-RUN sudo chown node:node -R $COC_PATH
-RUN mkdir -p $EXTENSIONS
-RUN echo '{"dependencies":{}}' > $EXTENSIONS/package.json
-ENV PATH=$PATH:$EXTENSIONS/node_modules/.bin
 
 ENTRYPOINT ["sh", "/home/node/entrypoint.sh"]
 CMD ["sh", "/home/node/init.sh"]

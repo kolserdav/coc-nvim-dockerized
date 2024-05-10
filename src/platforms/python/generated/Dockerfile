@@ -4,16 +4,20 @@ FROM node:bookworm-slim
 
 ENV NVIM_USER=node
 ENV MNT_DIR=/mnt/project
+ENV HOME=/home/$NVIM_USER
+ENV XDG_CONFIG_HOME=$HOME/.local/share
+ENV NPM_CONFIG_PREFIX=$HOME/.npm-global
+ENV COC_PATH=$XDG_CONFIG_HOME/coc
+ENV NVIM_CONF_PATH=$XDG_CONFIG_HOME/nvim
+ENV COC_SETTINGS_PATH=$NVIM_CONF_PATH/coc-settings.json
+ENV EXTENSIONS=$COC_PATH/extensions
 
 RUN mkdir -p $MNT_DIR
-RUN apt-get update -y && apt-get install curl sudo git -y
+RUN apt-get update && apt-get install curl sudo git -y
 RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage \
        && chmod u+x nvim.appimage \
        && ./nvim.appimage --appimage-extract \
        && ln -s /squashfs-root/AppRun /usr/bin/nvim
-
-ENV HOME=/home/$NVIM_USER
-ENV XDG_CONFIG_HOME=$HOME/.local/share
 
 RUN usermod -aG sudo $NVIM_USER
 RUN echo "$NVIM_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$NVIM_USER
@@ -22,20 +26,27 @@ USER $NVIM_USER
 
 RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+COPY init.vim $XDG_CONFIG_HOME/nvim/init.vim
+RUN nvim -c "PlugInstall --sync | qa"
 
-ENV NPM_CONFIG_PREFIX=$HOME/.npm-global
+COPY coc-settings.json $COC_SETTINGS_PATH
+RUN sudo chown $NVIM_USER:$NVIM_USER $COC_SETTINGS_PATH
 
+RUN mkdir -p $COC_PATH
+RUN sudo chown node:node -R $COC_PATH
+RUN mkdir -p $EXTENSIONS
+RUN echo '{"dependencies":{}}' > $EXTENSIONS/package.json
+ENV PATH=$PATH:$EXTENSIONS/node_modules/.bin
 ########## Platform specified part ##########
 
 
 RUN sudo apt-get install python3 python3-pip -y
 RUN sudo ln -s $(which python3) /usr/bin/python
+
+WORKDIR $EXTENSIONS
+RUN npm install coc-pyright --ignore-scripts --no-lockfile --omit=dev
 #############################################
 
-
-
-COPY init.vim $XDG_CONFIG_HOME/nvim/init.vim
-RUN nvim -c "PlugInstall --sync | qa"
 
 COPY init.sh $HOME/init.sh
 COPY entrypoint.sh $HOME/entrypoint.sh
@@ -45,20 +56,6 @@ RUN sudo chown $NVIM_USER:$NVIM_USER $HOME/*
 ENV PATH=$PATH:$NPM_CONFIG_PREFIX/bin
 
 WORKDIR $MNT_DIR
-
-ENV XDG_CONFIG_HOME=$HOME/.local/share
-ENV COC_PATH=$XDG_CONFIG_HOME/coc
-ENV NVIM_CONF_PATH=$XDG_CONFIG_HOME/nvim
-ENV COC_SETTINGS_PATH=$NVIM_CONF_PATH/coc-settings.json
-COPY coc-settings.json $COC_SETTINGS_PATH
-RUN sudo chown $NVIM_USER:$NVIM_USER $COC_SETTINGS_PATH
-
-ENV EXTENSIONS=$COC_PATH/extensions
-RUN mkdir -p $COC_PATH
-RUN sudo chown node:node -R $COC_PATH
-RUN mkdir -p $EXTENSIONS
-RUN echo '{"dependencies":{}}' > $EXTENSIONS/package.json
-ENV PATH=$PATH:$EXTENSIONS/node_modules/.bin
 
 ENTRYPOINT ["sh", "/home/node/entrypoint.sh"]
 CMD ["sh", "/home/node/init.sh"]

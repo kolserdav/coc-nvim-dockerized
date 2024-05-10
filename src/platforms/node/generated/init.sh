@@ -6,13 +6,7 @@ npm install coc-json --install-strategy=shallow --omit=dev
 cd -
 
 custom_script_path=/home/$NVIM_USER/custom.sh
-
 ########## Platform specified part ##########
-echo "Installing Coc plugins..."
-cd $EXTENSIONS
-npm install coc-tsserver --ignore-scripts --no-lockfile --no-global --legacy-peer-deps --omit=dev
-cd -
-
 if [ -f $custom_script_path  ]; then
 	echo "Running custom user script"
 	bash $custom_script_path
@@ -21,7 +15,6 @@ else
 	npm i
 fi
 #############################################
-
 
 echo "Starting default script ..."
 while :

@@ -29,21 +29,17 @@ do
     echo $GENERATED_MESS > $dockerfile_path
     echo '' >> $dockerfile_path
     echo "$(cat $common_path/Dockerfile.head.snippet)" >> $dockerfile_path
-    echo '' >> $dockerfile_path
     echo "########## Platform specified part ##########" >> $dockerfile_path
     echo "$(cat $platform_path/Dockerfile | sed "s/$IMAGE//g")" >> $dockerfile_path
     echo "#############################################" >> $dockerfile_path
-    echo '' >> $dockerfile_path
     echo "$(cat $common_path/Dockerfile.body.snippet | sed "s/$IMAGE//g")" >> $dockerfile_path
 
     echo $START_SH > $init_path
     echo $GENERATED_MESS >> $init_path
     echo "$(cat $common_path/init.head.snippet.sh)" >> $init_path
-    echo '' >> $init_path
     echo "########## Platform specified part ##########" >> $init_path
     echo "$(cat $platform_path/init.sh)" >> $init_path
     echo "#############################################" >> $init_path
-    echo '' >> $init_path
     echo "$(cat $common_path/init.body.snippet.sh)" >> $init_path
 
     echo $START_SH > $entrypoint_path
