@@ -11,27 +11,49 @@ ENV COC_SETTINGS_PATH=$NVIM_CONF_PATH/coc-settings.json
 ENV EXTENSIONS=$COC_PATH/extensions
 
 RUN mkdir -p $MNT_DIR
-RUN apt-get update && apt-get install curl sudo git -y
-RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage \
-       && chmod u+x nvim.appimage \
-       && ./nvim.appimage --appimage-extract \
-       && ln -s /squashfs-root/AppRun /usr/bin/nvim
+RUN apt-get update && apt-get install sudo git -y
+RUN apt-get install ninja-build gettext cmake unzip curl build-essential -y
+
+#RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage \
+#       && chmod u+x nvim.appimage \
+#       && ./nvim.appimage --appimage-extract \
+#       && ln -s /squashfs-root/AppRun /usr/bin/nvim
+
+WORKDIR /root
+RUN git clone https://github.com/neovim/neovim.git
+WORKDIR /root/neovim
+RUN git checkout stable
+RUN make CMAKE_BUILD_TYPE=RelWithDebInfo
+RUN make install
 
 RUN usermod -aG sudo $NVIM_USER
 RUN echo "$NVIM_USER ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/$NVIM_USER
 
-USER $NVIM_USER
 
-RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+RUN mkdir -p $HOME
+RUN chown $NVIM_USER:$NVIM_USER -R $HOME
+RUN mkdir -p $COC_PATH
+RUN chown node:node -R $COC_PATH
+COPY coc-settings.json $COC_SETTINGS_PATH
+RUN chown $NVIM_USER:$NVIM_USER $COC_SETTINGS_PATH
+RUN mkdir -p $NVIM_CONF_PATH/site/autoload
+RUN chown $NVIM_USER:$NVIM_USER -R $NVIM_CONF_PATH
+
+RUN chown root:root /usr/bin/sudo
+RUN chmod 4755 /usr/bin/sudo
+
+USER $NVIM_USER
+WORKDIR $HOME
+
+
+RUN mkdir -p $EXTENSIONS
+RUN echo '{"dependencies":{}}' > $EXTENSIONS/package.json
+ENV PATH=$PATH:$EXTENSIONS/node_modules/.bin
+
+RUN sh -c 'curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 COPY init.vim $XDG_CONFIG_HOME/nvim/init.vim
 RUN nvim -c "PlugInstall --sync | qa"
 
-COPY coc-settings.json $COC_SETTINGS_PATH
-RUN sudo chown $NVIM_USER:$NVIM_USER $COC_SETTINGS_PATH
-
-RUN mkdir -p $COC_PATH
-RUN sudo chown node:node -R $COC_PATH
-RUN mkdir -p $EXTENSIONS
-RUN echo '{"dependencies":{}}' > $EXTENSIONS/package.json
-ENV PATH=$PATH:$EXTENSIONS/node_modules/.bin
+RUN sudo apt-get remove ninja-build gettext cmake unzip build-essential git -y
+RUN sudo apt-get autoremove -y

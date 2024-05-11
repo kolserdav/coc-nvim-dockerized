@@ -5,7 +5,7 @@ logs:
 exec:
 	docker exec -it neovim bash
 build:
-	src/scripts/build.sh
+	make merge && src/scripts/build.sh
 merge:
 	src/scripts/merge.sh
 compose:
