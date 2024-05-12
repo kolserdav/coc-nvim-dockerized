@@ -3,6 +3,7 @@
 FROM node:bookworm-slim
 
 ENV NVIM_USER=node
+
 ENV MNT_DIR=/mnt/project
 ENV HOME=/home/$NVIM_USER
 ENV XDG_CONFIG_HOME=$HOME/.local/share
@@ -15,11 +16,6 @@ ENV EXTENSIONS=$COC_PATH/extensions
 RUN mkdir -p $MNT_DIR
 RUN apt-get update && apt-get install sudo git -y
 RUN apt-get install ninja-build gettext cmake unzip curl build-essential -y
-
-#RUN curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage \
-#       && chmod u+x nvim.appimage \
-#       && ./nvim.appimage --appimage-extract \
-#       && ln -s /squashfs-root/AppRun /usr/bin/nvim
 
 WORKDIR /root
 RUN git clone https://github.com/neovim/neovim.git
@@ -57,8 +53,12 @@ RUN sh -c 'curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim \
 COPY init.vim $XDG_CONFIG_HOME/nvim/init.vim
 RUN nvim -c "PlugInstall --sync | qa"
 
-RUN sudo apt-get remove ninja-build gettext cmake unzip build-essential git -y
-RUN sudo apt-get autoremove -y
+
+USER root
+RUN apt-get remove ninja-build gettext cmake unzip build-essential -y
+RUN apt-get autoremove -y
+RUN rm -rf /root/neovim
+USER $NVIM_USER
 ########## Platform specified part ##########
 
 
@@ -75,7 +75,9 @@ RUN npm install coc-rust-analyzer --ignore-scripts --no-lockfile --no-global --l
 COPY init.sh $HOME/init.sh
 COPY entrypoint.sh $HOME/entrypoint.sh
 
-RUN sudo chown $NVIM_USER:$NVIM_USER $HOME/*
+USER root
+RUN chown $NVIM_USER:$NVIM_USER $HOME/*
+USER $NVIM_USER
 
 ENV PATH=$PATH:$NPM_CONFIG_PREFIX/bin
 

@@ -9,7 +9,7 @@ build:
 merge:
 	src/scripts/merge.sh
 compose:
-	docker compose up -d
+	docker compose -f docker-compose.dev.yml up -d
 delete: 
 	docker rm -f neovim && docker image rm coc-nvim-dockerized-neovim && docker volume rm coc-nvim-dockerized_neovim
 create-engine:

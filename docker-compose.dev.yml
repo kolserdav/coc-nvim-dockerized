@@ -1,7 +1,9 @@
 services:
   neovim:
-    image: kolserdav/coc-nvim-node:latest
-    container_name: neovim
+    build:
+      context: ./src/platforms/${NEOVIM_NAME}/generated
+      dockerfile: Dockerfile
+    container_name: neovim-${NEOVIM_NAME}
     environment:
       UID: ${NEOVIM_UID}
       GID: ${NEOVIM_GID}
@@ -9,6 +11,6 @@ services:
       - ${NEOVIM_MNT_DIR}:/mnt/project
       - neovim:/home/node/.local/share
         #- ./custom.sh:/home/node/custom.sh
-    hostname: neovim
+    hostname: neovim-${NEOVIM_NAME}
 volumes:
   neovim: {}

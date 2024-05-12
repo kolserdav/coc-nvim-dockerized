@@ -3,7 +3,9 @@ FROM node:bookworm-slim
 COPY init.sh $HOME/init.sh
 COPY entrypoint.sh $HOME/entrypoint.sh
 
-RUN sudo chown $NVIM_USER:$NVIM_USER $HOME/*
+USER root
+RUN chown $NVIM_USER:$NVIM_USER $HOME/*
+USER $NVIM_USER
 
 ENV PATH=$PATH:$NPM_CONFIG_PREFIX/bin
 
