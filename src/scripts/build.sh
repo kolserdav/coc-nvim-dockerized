@@ -4,7 +4,7 @@ NODES=$(sh $PWD/src/constants/nodes.sh)
 NODES_ARR=($(echo $NODES | tr "," "\n"))
 VERSION=$(sh $PWD/src/constants/version.sh)
 
-platform="linux/arm64,linux/amd64"
+platform="linux/ppc64le,linux/arm/v7,linux/arm64/v8,linux/amd64,linux/s390x"
 
 for node in "${NODES_ARR[@]}"
 do  
