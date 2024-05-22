@@ -1,18 +1,18 @@
-## Coc Neovim Python dockerized
+## Coc Neovim python dockerized
 
-Docker container which has Neovim's Coc plugin with Python language server.
+Docker container which has Neovim's Coc plugin with "python" language server.
 
 ### Running
 - Docker run
 ```sh
-docker run -e "NEOVIM_UID=1000" -e "NEOVIM_GID=1000" -e "NEOVIM_MNT_DIR=/path/to/project" -v /path/to/project:/mnt/project kolserdav/coc-neovim-Python:latest 
+docker run -e "NEOVIM_UID=1000" -e "NEOVIM_GID=1000" -e "NEOVIM_MNT_DIR=/path/to/project" -v /path/to/project:/mnt/project kolserdav/coc-neovim-python:latest 
 ```
 - Docker compose
 ```yml
 services:
   neovim:
-    image: kolserdav/coc-nvim-Python:latest
-    container_name: neovim-Python
+    image: kolserdav/coc-nvim-python:latest
+    container_name: neovim-python
     environment:
       UID: ${NEOVIM_UID}
       GID: ${NEOVIM_GID}
@@ -20,7 +20,7 @@ services:
       - ${NEOVIM_MNT_DIR}:/mnt/project
       - neovim:/home/node/.local/share
         #- ./custom.sh:/home/node/custom.sh
-    hostname: neovim-Python
+    hostname: neovim-python
 volumes:
   neovim: {}
 ```

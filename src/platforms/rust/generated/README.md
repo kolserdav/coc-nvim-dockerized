@@ -1,18 +1,18 @@
-## Coc Neovim Rust dockerized
+## Coc Neovim rust dockerized
 
-Docker container which has Neovim's Coc plugin with Rust language server.
+Docker container which has Neovim's Coc plugin with "rust" language server.
 
 ### Running
 - Docker run
 ```sh
-docker run -e "NEOVIM_UID=1000" -e "NEOVIM_GID=1000" -e "NEOVIM_MNT_DIR=/path/to/project" -v /path/to/project:/mnt/project kolserdav/coc-neovim-Rust:latest 
+docker run -e "NEOVIM_UID=1000" -e "NEOVIM_GID=1000" -e "NEOVIM_MNT_DIR=/path/to/project" -v /path/to/project:/mnt/project kolserdav/coc-neovim-rust:latest 
 ```
 - Docker compose
 ```yml
 services:
   neovim:
-    image: kolserdav/coc-nvim-Rust:latest
-    container_name: neovim-Rust
+    image: kolserdav/coc-nvim-rust:latest
+    container_name: neovim-rust
     environment:
       UID: ${NEOVIM_UID}
       GID: ${NEOVIM_GID}
@@ -20,7 +20,7 @@ services:
       - ${NEOVIM_MNT_DIR}:/mnt/project
       - neovim:/home/node/.local/share
         #- ./custom.sh:/home/node/custom.sh
-    hostname: neovim-Rust
+    hostname: neovim-rust
 volumes:
   neovim: {}
 ```

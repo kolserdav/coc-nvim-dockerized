@@ -1,18 +1,18 @@
-## Coc Neovim Node dockerized
+## Coc Neovim node dockerized
 
-Docker container which has Neovim's Coc plugin with Node language server.
+Docker container which has Neovim's Coc plugin with "node" language server.
 
 ### Running
 - Docker run
 ```sh
-docker run -e "NEOVIM_UID=1000" -e "NEOVIM_GID=1000" -e "NEOVIM_MNT_DIR=/path/to/project" -v /path/to/project:/mnt/project kolserdav/coc-neovim-Node:latest 
+docker run -e "NEOVIM_UID=1000" -e "NEOVIM_GID=1000" -e "NEOVIM_MNT_DIR=/path/to/project" -v /path/to/project:/mnt/project kolserdav/coc-neovim-node:latest 
 ```
 - Docker compose
 ```yml
 services:
   neovim:
-    image: kolserdav/coc-nvim-Node:latest
-    container_name: neovim-Node
+    image: kolserdav/coc-nvim-node:latest
+    container_name: neovim-node
     environment:
       UID: ${NEOVIM_UID}
       GID: ${NEOVIM_GID}
@@ -20,7 +20,7 @@ services:
       - ${NEOVIM_MNT_DIR}:/mnt/project
       - neovim:/home/node/.local/share
         #- ./custom.sh:/home/node/custom.sh
-    hostname: neovim-Node
+    hostname: neovim-node
 volumes:
   neovim: {}
 ```

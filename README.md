@@ -16,7 +16,7 @@ ___
 
 ## Coc Neovim [node|rust|python] dockerized
 
-Docker container which has Neovim's Coc plugin with [node|rust|python] language server.
+Docker container which has Neovim's Coc plugin with "[node|rust|python]" language server.
 
 ### Running
 - Docker run

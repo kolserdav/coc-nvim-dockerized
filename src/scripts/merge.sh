@@ -57,7 +57,7 @@ do
     
     echo "$(cat $platform_path/coc-settings.json)" > $coc_setting_path
 
-    echo "$(cat $common_path/README-containers.md | sed "s/\${NEOVIM_NAME}/$(echo $node | sed -e "s/\b\(.\)/\u\1/g")/g")" > $readme_path
+    echo "$(cat $common_path/README-containers.md | sed "s/\${NEOVIM_NAME}/$node/g")" > $readme_path
 
     echo "[coc-nvim-$node](https://hub.docker.com/r/kolserdav/coc-nvim-$node)  " >> $readme_pwd_path
 done

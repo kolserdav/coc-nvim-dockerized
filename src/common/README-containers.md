@@ -1,6 +1,6 @@
 ## Coc Neovim ${NEOVIM_NAME} dockerized
 
-Docker container which has Neovim's Coc plugin with ${NEOVIM_NAME} language server.
+Docker container which has Neovim's Coc plugin with "${NEOVIM_NAME}" language server.
 
 ### Running
 - Docker run
