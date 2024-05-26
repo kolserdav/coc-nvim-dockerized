@@ -11,7 +11,7 @@ docker run -e "NEOVIM_UID=1000" -e "NEOVIM_GID=1000" -e "NEOVIM_MNT_DIR=/path/to
 ```yml
 services:
   neovim:
-    image: kolserdav/coc-nvim-rust:latest
+    image: kolserdav/coc-nvim-rust
     container_name: neovim-rust
     environment:
       UID: ${NEOVIM_UID}

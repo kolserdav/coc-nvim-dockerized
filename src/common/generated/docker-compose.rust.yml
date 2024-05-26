@@ -1,0 +1,14 @@
+services:
+  neovim:
+    image: kolserdav/coc-nvim-rust
+    container_name: neovim-rust
+    environment:
+      UID: ${NEOVIM_UID}
+      GID: ${NEOVIM_GID}
+    volumes:
+      - ${NEOVIM_MNT_DIR}:/mnt/project
+      - neovim:/home/node/.local/share
+        #- ./custom.sh:/home/node/custom.sh
+    hostname: neovim-rust
+volumes:
+  neovim: {}
