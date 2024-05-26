@@ -1,5 +1,7 @@
 #! /usr/bin/bash
 
+set -e
+
 NODES=$(sh $PWD/src/constants/nodes.sh)
 NODES_ARR=($(echo $NODES | tr "," "\n"))
 

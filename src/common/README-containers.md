@@ -18,11 +18,11 @@ services:
       GID: ${NEOVIM_GID}
     volumes:
       - ${NEOVIM_MNT_DIR}:/mnt/project
-      - neovim:/home/node/.local/share
+      - neovim-${NEOVIM_NAME}:/home/node/.local/share
         #- ./custom.sh:/home/node/custom.sh
     hostname: neovim-${NEOVIM_NAME}
 volumes:
-  neovim: {}
+  neovim-${NEOVIM_NAME}: {}
 ```
 
 ### Required environment variables
